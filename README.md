@@ -1,6 +1,8 @@
 HON-Deploy
 ==========
 
+[![Build Status](https://travis-ci.org/healthonnet/HON-Deploy.svg?branch=master)](https://travis-ci.org/healthonnet/HON-Deploy)
+
 Deploy perl module + bin + cgi.
 
 Installation
