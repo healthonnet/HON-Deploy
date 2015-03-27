@@ -53,18 +53,24 @@ Where the CGI scripts are to be installed
 
 Where the perl interpreter is installed
 
+=item --installdeps
+
+Install missing prerequisites
+
 =back
 
 =cut
 
 my ($help);
 my ( $pDistSrc, $pDirBase, $pDirCgi, $perlInterpeter );
+my ( $installdeps );
 
 GetOptions(
   "dist=s"             => \$pDistSrc,
   "dir-base=s"         => \$pDirBase,
   "dir-cgi=s"          => \$pDirCgi,
   "perl-interpreter=s" => \$perlInterpeter,
+  "installdeps"        => \$installdeps,
   "help"               => \$help,
   )
   || pod2usage(2);
@@ -75,7 +81,12 @@ if ( $help || !$pDirBase || !$pDistSrc ) {
 }
 
 foreach my $dSrc ( split( /,/, $pDistSrc ) ) {
-  installDistrib( src => $dSrc, base => $pDirBase, cgi => $pDirCgi );
+  installDistrib( 
+    src         => $dSrc,
+    base        => $pDirBase,
+    cgi         => $pDirCgi,
+    installdeps => $installdeps
+  );
 }
 
 sub installDistrib {
@@ -117,8 +128,10 @@ sub installDistrib {
     }
   }
 
-  my @cmd = ( 'perl Build.PL', './Build test', "./Build install  --install_base $dirBase" );
-  $cmd[2] .= " --install_path cgi=$dirCgi" if $dirCgi;
+  my @cmd = ( 'perl Build.PL' );
+  push ( @cmd, './Build installdeps') if $args{installdeps};
+  push ( @cmd, './Build test', "./Build install  --install_base $dirBase" );
+  push ( @cmd, " --install_path cgi=$dirCgi") if $dirCgi;
 
   foreach my $cmd (@cmd) {
     warn "$cmd\n";
