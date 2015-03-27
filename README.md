@@ -57,7 +57,7 @@ Author
 ------
  * [Alexandre Masselot](https://github.com/alexmasselot)
 
-Licence
+License
 -------
 
 This program is free software; you can redistribute it and/or modify it
