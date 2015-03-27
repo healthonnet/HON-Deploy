@@ -12,7 +12,13 @@ my $builder = Module::Build->new(
         'Test::More' => 0,
     },
     requires => {
-        'perl' => 5.006,
+        'perl'          => 5.006,
+        'LWP::Simple'   => 6.00,
+        'IO::All'       => 0.86,
+        'Archive::Tar'  => 1.76,
+        'Module::Build' => 0.4003,
+        'File::Temp'    => 0.22,
+        
     },
     add_to_cleanup      => [ 'HON-Deploy-*' ],
     create_makefile_pl => 'traditional',
