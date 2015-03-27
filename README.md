@@ -29,7 +29,11 @@ Usage
 ```bash
 hon-deploy-perl-distrib.pl --help
 
-hon-deploy-perl-distrib.pl --dist=path/to/Perl-Module.tar.gz --dir-bin=/path/to/bin --dir-lib=/path/to/lib --dir-cgi=/path/to/cgi
+hon-deploy-perl-distrib.pl --dist=path/to/HON-Deploy.tar.gz --dir-base=/path/to/base
+
+hon-deploy-perl-distrib.pl --dist=http://znverdi.hcuge.ch/~hondist/perl/dist/HON-Deploy.tar.gz --dir-base=/path/to/base
+
+hon-deploy-perl-distrib.pl --dist=http://znverdi.hcuge.ch/~hondist/perl/dist/HON-Utils-latest.tar.gz,http://znverdi.hcuge.ch/~hondist/perl/dist/HON-Http-Mirror-latest.tar.gz --dir-base=$HOME/perl --dir-cgi=$HOME/public_html/cgi-bin --perl-interpreter=$(which perl)
 ```
 
 

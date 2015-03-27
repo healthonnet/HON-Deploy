@@ -13,32 +13,31 @@ use File::Temp qw/tempdir/;
 
 =head1 NAME
 
-hon-deploy-mirror.pl 
+hon-deploy-mirror.pl
 
 =head1 DESCRIPTION
 
-deploy the mirror perl module + bin + cgi
+Deploy perl module + bin + cgi
 
 =head1 SYNOPSIS
 
- ./hon-deploy-perl-distrib.pl --dist=path/to/HON-Http-Mirror.tar.gz --dir-bin=/path/to/bin --dir-lib=/path/to/lib --dir-cgi=/path/to/cgi
- 
- ./hon-deploy-perl-distrib.pl --dist=http://znverdi.hcuge.ch/~hondev/perl/dist/HON-Http-Mirror-latest.tar.gz --dir-bin=/tmp/mirror-dist/bin --dir-lib=/tmp/mirror-dist/lib
- 
- ./hon-deploy-perl-distrib.pl  --dist=http://znverdi.hcuge.ch/~hondist/perl/dist/HON-Utils-latest.tar.gz,http://znverdi.hcuge.ch/~hondist/perl/dist/HON-Http-Mirror-latest.tar.gz   --dir-base=$HOME/perl --dir-cgi=$HOME/public_html/cgi-bin --perl-interpreter=$(which perl) 
- 
+    hon-deploy-perl-distrib.pl --dist=path/to/HON-Deploy.tar.gz --dir-base=/path/to/base
+
+    hon-deploy-perl-distrib.pl --dist=http://znverdi.hcuge.ch/~hondist/perl/dist/HON-Deploy.tar.gz --dir-base=/path/to/base
+
+    hon-deploy-perl-distrib.pl --dist=http://znverdi.hcuge.ch/~hondist/perl/dist/HON-Utils-latest.tar.gz,http://znverdi.hcuge.ch/~hondist/perl/dist/HON-Http-Mirror-latest.tar.gz --dir-base=$HOME/perl --dir-cgi=$HOME/public_html/cgi-bin --perl-interpreter=$(which perl)
+
 =head1 ARGUMENTS
 
 =over 2
 
-=item --dist=/path/to/HON-Http-Mirror-x.yy.tar.gz
+=item --dist=/path/to/HON-Deploy.tar.gz
 
 Either file or url
 
-=item --dir-base=/path/to/base 
+=item --dir-base=/path/to/base
 
-Where the default per is to be deployed are to be installed
-
+Where the module is to be installed
 
 =back
 
@@ -49,6 +48,10 @@ Where the default per is to be deployed are to be installed
 =item --dir-cgi=/path/to/cgi
 
 Where the CGI scripts are to be installed
+
+=item --perl-interpreter=/path/to/perl
+
+Where the perl interpreter is installed
 
 =back
 
@@ -103,7 +106,7 @@ sub installDistrib {
   if($perlInterpeter){
     my @scripts;
     @scripts= grep {"$_" =~/\.pl$/i} io('bin')->all() if -d 'bin';
-    
+
     push @scripts,  grep {"$_" =~/\.(pl|cgi)$/i} io('cgi')->all() if -d "cgi";
     foreach my $s (@scripts){
       system "chmod +w $s"; 
