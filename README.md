@@ -62,6 +62,10 @@ You can also look for information at:
 Author
 ------
  * [Alexandre Masselot](https://github.com/alexmasselot)
+ 
+Maintainer
+----------
+ * [William Belle](https://github.com/williambelle)
 
 License
 -------
