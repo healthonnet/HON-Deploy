@@ -130,8 +130,11 @@ sub installDistrib {
 
   my @cmd = ( 'perl Build.PL' );
   push ( @cmd, './Build installdeps') if $args{installdeps};
-  push ( @cmd, './Build test', "./Build install  --install_base $dirBase" );
-  push ( @cmd, " --install_path cgi=$dirCgi") if $dirCgi;
+  push ( @cmd, './Build test');
+
+  my $installCmd = "./Build install  --install_base $dirBase";
+  $installCmd .= " --install_path cgi=$dirCgi" if $dirCgi;
+  push ( @cmd, $installCmd);
 
   foreach my $cmd (@cmd) {
     warn "$cmd\n";
