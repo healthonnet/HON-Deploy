@@ -81,7 +81,7 @@ if ( $help || !$pDirBase || !$pDistSrc ) {
 }
 
 foreach my $dSrc ( split( /,/, $pDistSrc ) ) {
-  installDistrib( 
+  installDistrib(
     src         => $dSrc,
     base        => $pDirBase,
     cgi         => $pDirCgi,
@@ -120,11 +120,11 @@ sub installDistrib {
 
     push @scripts,  grep {"$_" =~/\.(pl|cgi)$/i} io('cgi')->all() if -d "cgi";
     foreach my $s (@scripts){
-      system "chmod +w $s"; 
+      system "chmod +w $s";
       my $txt = io($s)->slurp;
       $txt=~s/^#!.*?\n/#!$perlInterpeter\n/s;
       io($s)<$txt;
-      system "chmod -w $s"; 
+      system "chmod -w $s";
     }
   }
 
