@@ -77,10 +77,10 @@ GetOptions(
 
 if ( $help || !$pDirBase || !$pDistSrc ) {
   pod2usage(1);
-  exit(0);
+  exit 0;
 }
 
-foreach my $dSrc ( split( /,/, $pDistSrc ) ) {
+foreach my $dSrc ( split /,/, $pDistSrc ) {
   installDistrib(
     src         => $dSrc,
     base        => $pDirBase,
@@ -110,9 +110,9 @@ sub installDistrib {
   $tar->read($distGz);
   $tar->setcwd($tmpdir);
   $tar->extract();
-  my $distTmpir = "$tmpdir/" . ( split( /\//, ( $tar->list_files() )[0] ) )[0];
+  my $distTmpir = "$tmpdir/" . ( split /\//, ( $tar->list_files() )[0] )[0];
   warn "working dir: $distTmpir\n";
-  chdir($distTmpir);
+  chdir $distTmpir;
 
   if($perlInterpeter){
     my @scripts;
@@ -129,16 +129,18 @@ sub installDistrib {
   }
 
   my @cmd = ( 'perl Build.PL' );
-  push ( @cmd, './Build installdeps') if $args{installdeps};
-  push ( @cmd, './Build test');
+  push @cmd, './Build installdeps' if $args{installdeps};
+  push @cmd, './Build test';
 
   my $installCmd = "./Build install  --install_base $dirBase";
   $installCmd .= " --install_path cgi=$dirCgi" if $dirCgi;
-  push ( @cmd, $installCmd);
+  push @cmd, $installCmd;
 
   foreach my $cmd (@cmd) {
     warn "$cmd\n";
     system($cmd) && die "cannot execute";
   }
-  chdir( $ENV{HOME} );
+  chdir $ENV{HOME};
+
+  return;
 }
