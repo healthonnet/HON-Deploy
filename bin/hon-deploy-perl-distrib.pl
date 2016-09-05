@@ -66,12 +66,12 @@ my ( $pDistSrc, $pDirBase, $pDirCgi, $perlInterpeter );
 my ( $installdeps );
 
 GetOptions(
-  "dist=s"             => \$pDistSrc,
-  "dir-base=s"         => \$pDirBase,
-  "dir-cgi=s"          => \$pDirCgi,
-  "perl-interpreter=s" => \$perlInterpeter,
-  "installdeps"        => \$installdeps,
-  "help"               => \$help,
+  'dist=s'             => \$pDistSrc,
+  'dir-base=s'         => \$pDirBase,
+  'dir-cgi=s'          => \$pDirCgi,
+  'perl-interpreter=s' => \$perlInterpeter,
+  'installdeps'        => \$installdeps,
+  'help'               => \$help,
   )
   || pod2usage(2);
 
@@ -118,7 +118,7 @@ sub installDistrib {
     my @scripts;
     @scripts= grep {"$_" =~/\.pl$/i} io('bin')->all() if -d 'bin';
 
-    push @scripts,  grep {"$_" =~/\.(pl|cgi)$/i} io('cgi')->all() if -d "cgi";
+    push @scripts,  grep {"$_" =~/\.(pl|cgi)$/i} io('cgi')->all() if -d 'cgi';
     foreach my $s (@scripts){
       system "chmod +w $s";
       my $txt = io($s)->slurp;
@@ -138,7 +138,7 @@ sub installDistrib {
 
   foreach my $cmd (@cmd) {
     warn "$cmd\n";
-    system($cmd) && die "cannot execute";
+    system($cmd) && die 'cannot execute';
   }
   chdir $ENV{HOME};
 
