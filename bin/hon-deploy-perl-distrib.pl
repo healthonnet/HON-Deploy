@@ -20,15 +20,19 @@ hon-deploy-mirror.pl
 
 Deploy perl module + bin + cgi
 
-=head1 SYNOPSIS
+=head1 VERSION
 
-    hon-deploy-perl-distrib.pl --dist=path/to/HON-Deploy.tar.gz --dir-base=/path/to/base
+Version 0.02
 
-    hon-deploy-perl-distrib.pl --dist=http://znverdi.hcuge.ch/~hondist/perl/dist/HON-Deploy.tar.gz --dir-base=/path/to/base
+=head1 USAGE
 
-    hon-deploy-perl-distrib.pl --dist=http://znverdi.hcuge.ch/~hondist/perl/dist/HON-Utils-latest.tar.gz,http://znverdi.hcuge.ch/~hondist/perl/dist/HON-Http-Mirror-latest.tar.gz --dir-base=$HOME/perl --dir-cgi=$HOME/public_html/cgi-bin --perl-interpreter=$(which perl)
+  hon-deploy-perl-distrib.pl --dist=path/to/HON-Deploy.tar.gz --dir-base=/path/to/base
 
-=head1 ARGUMENTS
+  hon-deploy-perl-distrib.pl --dist=http://znverdi.hcuge.ch/~hondist/perl/dist/HON-Deploy.tar.gz --dir-base=/path/to/base
+
+  hon-deploy-perl-distrib.pl --dist=http://znverdi.hcuge.ch/~hondist/perl/dist/HON-Utils-latest.tar.gz,http://znverdi.hcuge.ch/~hondist/perl/dist/HON-Http-Mirror-latest.tar.gz --dir-base=$HOME/perl --dir-cgi=$HOME/public_html/cgi-bin --perl-interpreter=$(which perl)
+
+=head1 REQUIRED ARGUMENTS
 
 =over 2
 
@@ -61,6 +65,8 @@ Install missing prerequisites
 =back
 
 =cut
+
+our $VERSION = '0.02';
 
 my ($help);
 my ( $pDistSrc, $pDirBase, $pDirCgi, $perlInterpeter );
@@ -145,3 +151,25 @@ sub installDistrib {
 
   return;
 }
+
+=head1 AUTHOR
+
+Alexandre Masselot, C<< <alexandre.masselot at gmail.com> >>
+
+William Belle, C<< <william.belle at gmail.com> >>
+
+=head1 BUGS AND LIMITATIONS
+
+Please report any bugs or feature requests to C<bug-hon-deploy at rt.cpan.org>, or through
+the web interface at L<http://rt.cpan.org/NoAuth/ReportBug.html?Queue=HON-Deploy>.  I will be notified, and then you'll
+automatically be notified of progress on your bug as I make changes.
+
+=head1 LICENSE AND COPYRIGHT
+
+This program is free software; you can redistribute it and/or modify it
+under the terms of either: the GNU General Public License as published
+by the Free Software Foundation; or the Artistic License.
+
+See http://dev.perl.org/licenses/ for more information.
+
+=cut
