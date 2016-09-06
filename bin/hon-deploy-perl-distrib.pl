@@ -14,7 +14,7 @@ use File::Temp qw/tempdir/;
 
 =head1 NAME
 
-hon-deploy-mirror.pl
+hon-deploy-perl-distrib.pl
 
 =head1 DESCRIPTION
 
@@ -42,7 +42,7 @@ Either file or url
 
 =item --dir-base=/path/to/base
 
-Where the module is to be installed
+An absolute path where the module is to be installed
 
 =back
 
@@ -52,7 +52,7 @@ Where the module is to be installed
 
 =item --dir-cgi=/path/to/cgi
 
-Where the CGI scripts are to be installed
+An absolute path where the CGI scripts are to be installed
 
 =item --perl-interpreter=/path/to/perl
 
