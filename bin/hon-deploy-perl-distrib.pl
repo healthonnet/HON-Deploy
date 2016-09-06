@@ -70,7 +70,7 @@ our $VERSION = '0.02';
 
 my ($help);
 my ( $pDistSrc, $pDirBase, $pDirCgi, $perlInterpeter );
-my ( $installdeps );
+my ($installdeps);
 
 GetOptions(
   'dist=s'             => \$pDistSrc,
@@ -79,8 +79,7 @@ GetOptions(
   'perl-interpreter=s' => \$perlInterpeter,
   'installdeps'        => \$installdeps,
   'help'               => \$help,
-  )
-  || pod2usage(2);
+) || pod2usage(2);
 
 if ( $help || !$pDirBase || !$pDistSrc ) {
   pod2usage(1);
@@ -102,7 +101,7 @@ sub installDistrib {
   my $dirBase = $args{base};
   my $dirCgi  = $args{cgi};
 
-  my $tmpdir = tempdir(TEMPLATE=>'hon-deploy-XXXXXXXX', CLEANUP => 1 );
+  my $tmpdir = tempdir( TEMPLATE => 'hon-deploy-XXXXXXXX', CLEANUP => 1 );
 
   my $distGz = "$tmpdir/dist.tgz";
   warn "mirroring: $distSrc\n";
@@ -121,21 +120,24 @@ sub installDistrib {
   warn "working dir: $distTmpir\n";
   chdir $distTmpir;
 
-  if($perlInterpeter){
+  if ($perlInterpeter) {
     my @scripts;
-    @scripts= grep {"$_" =~/\N{ONE DOT LEADER}pl$/ixms} io('bin')->all() if -d 'bin';
+    @scripts = grep { "$_" =~ /\N{ONE DOT LEADER}pl$/ixms } io('bin')->all()
+      if -d 'bin';
 
-    push @scripts,  grep {"$_" =~/\N{ONE DOT LEADER}(pl|cgi)$/ixms} io('cgi')->all() if -d 'cgi';
-    foreach my $s (@scripts){
+    push @scripts,
+      grep { "$_" =~ /\N{ONE DOT LEADER}(pl|cgi)$/ixms } io('cgi')->all()
+      if -d 'cgi';
+    foreach my $s (@scripts) {
       system "chmod +w $s";
       my $txt = io($s)->slurp;
-      $txt=~s/^#!.*?\n/#!$perlInterpeter\n/xms;
-      io($s)<$txt;
+      $txt =~ s/^#!.*?\n/#!$perlInterpeter\n/xms;
+      io($s) < $txt;
       system "chmod -w $s";
     }
   }
 
-  my @cmd = ( 'perl Build.PL' );
+  my @cmd = ('perl Build.PL');
   push @cmd, './Build installdeps' if $args{installdeps};
   push @cmd, './Build test';
 
