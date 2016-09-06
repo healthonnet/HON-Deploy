@@ -2,6 +2,7 @@
 use strict;
 use warnings;
 
+use charnames ':full';
 use Getopt::Long;
 use Pod::Usage;
 
@@ -80,7 +81,7 @@ if ( $help || !$pDirBase || !$pDistSrc ) {
   exit 0;
 }
 
-foreach my $dSrc ( split /,/, $pDistSrc ) {
+foreach my $dSrc ( split /,/xms, $pDistSrc ) {
   installDistrib(
     src         => $dSrc,
     base        => $pDirBase,
@@ -99,7 +100,7 @@ sub installDistrib {
 
   my $distGz = "$tmpdir/dist.tgz";
   warn "mirroring: $distSrc\n";
-  if ( $distSrc =~ /^(https?|ftp):\/\// ) {
+  if ( $distSrc =~ /^(https?|ftp):\/\//xms ) {
     mirror( $distSrc, $distGz );
   }
   else {
@@ -110,19 +111,19 @@ sub installDistrib {
   $tar->read($distGz);
   $tar->setcwd($tmpdir);
   $tar->extract();
-  my $distTmpir = "$tmpdir/" . ( split /\//, ( $tar->list_files() )[0] )[0];
+  my $distTmpir = "$tmpdir/" . ( split /\//xms, ( $tar->list_files() )[0] )[0];
   warn "working dir: $distTmpir\n";
   chdir $distTmpir;
 
   if($perlInterpeter){
     my @scripts;
-    @scripts= grep {"$_" =~/\.pl$/i} io('bin')->all() if -d 'bin';
+    @scripts= grep {"$_" =~/\N{ONE DOT LEADER}pl$/ixms} io('bin')->all() if -d 'bin';
 
-    push @scripts,  grep {"$_" =~/\.(pl|cgi)$/i} io('cgi')->all() if -d 'cgi';
+    push @scripts,  grep {"$_" =~/\N{ONE DOT LEADER}(pl|cgi)$/ixms} io('cgi')->all() if -d 'cgi';
     foreach my $s (@scripts){
       system "chmod +w $s";
       my $txt = io($s)->slurp;
-      $txt=~s/^#!.*?\n/#!$perlInterpeter\n/s;
+      $txt=~s/^#!.*?\n/#!$perlInterpeter\n/xms;
       io($s)<$txt;
       system "chmod -w $s";
     }
