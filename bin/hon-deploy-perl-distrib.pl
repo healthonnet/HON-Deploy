@@ -22,7 +22,7 @@ Deploy perl module + bin + cgi
 
 =head1 VERSION
 
-Version 0.02
+Version 0.03
 
 =head1 USAGE
 
@@ -66,7 +66,7 @@ Install missing prerequisites
 
 =cut
 
-our $VERSION = '0.02';
+our $VERSION = '0.03';
 
 my ($help);
 my ( $pDistSrc, $pDirBase, $pDirCgi, $perlInterpeter );
